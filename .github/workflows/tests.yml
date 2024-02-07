@@ -21,7 +21,9 @@ jobs:
           dotnet-version: '6.x' 
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: |
+          cd TestxUnit
+          dotnet restore
 
       - name: Build
         run: |
