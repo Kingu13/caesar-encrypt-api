@@ -1,0 +1,33 @@
+name: xUnit Tests
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - 'Developer'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.x' 
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: |
+          cd TestxUnit
+          dotnet build --configuration Release --no-restore
+
+      - name: Test
+        run: | 
+          dotnet test Tests.csproj --configuration Release --no-build
