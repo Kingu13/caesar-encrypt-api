@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Caesar Machine - Encrypt and Decrypt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+        }
+
+        .column {
+            flex: 1;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 0 10px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: calc(100% - 20px);
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        .copy-paste {
+            position: relative;
+        }
+
+        .copy-paste button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px;
+            font-size: 12px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .copy-paste button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="column">
+            <h1>Encrypt</h1>
+            <input type="text" id="plaintext" placeholder="Enter Text To Encrypt">
+            <button onclick="encryptText()">Encrypt</button>
+            <textarea id="encryptedText" rows="4" cols="30" readonly></textarea>
+        </div>
+        <div class="column">
+            <h1>Decrypt</h1>
+            <input type="text" id="encryptedText" placeholder="Enter Text To Decrypt">
+            <button onclick="decryptText()">Decrypt</button>
+            <textarea id="decryptedText" rows="4" cols="30" readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+        function encryptText() {
+            var plaintext = document.getElementById("plaintext").value;
+            fetch('/Caesar/encrypt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(plaintext)
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("encryptedText").value = data;
+            });
+        }
+
+        function decryptText() {
+            var encryptedText = document.getElementById("encryptedText").value;
+            fetch('/Caesar/decrypt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(encryptedText)
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("decryptedText").value = data;
+            });
+        }
+    </script>
+</body>
+</html>
