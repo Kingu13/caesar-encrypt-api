@@ -30,4 +30,5 @@ jobs:
 
       - name: Test
         run: | 
-          dotnet test Tests.csproj --configuration Release --no-build
+          cd TestxUnit
+          dotnet test Tests.csproj --configuration Release
