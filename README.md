@@ -3,7 +3,7 @@ Endpoints
 /Caesar
 
 /Encrypt
-exempel: encrypt?text=hej
+exempel: /encrypt?text=hej
 
 /Decrypt
 exempel: /decrypt?text=khm
